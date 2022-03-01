@@ -21,10 +21,14 @@ fun ConcaveMirrorScreen(
     objectSize: Float,
     objectDistance: Float,
     focus: Float,
+    concaveMirrorViewModel: ConcaveMirrorViewModel
 ) {
-    var objectSizeSliderValue by remember { mutableStateOf(0f) }
-    var objectDistanceSliderValue by remember { mutableStateOf(0f) }
-    var mirrorFocalPointSliderValue by remember { mutableStateOf(0f) }
+    val objectSizeSliderValue = concaveMirrorViewModel.objectSizeSliderValue
+    val onObjectSizeSliderValueChange = concaveMirrorViewModel::onObjectSizeSliderValueChanged
+    val objectDistanceSliderValue = concaveMirrorViewModel.objectDistanceSliderValue
+    val onObjectDistanceSliderValueChange = concaveMirrorViewModel::onObjectDistanceSliderValueChanged
+    val mirrorFocalPointSliderValue = concaveMirrorViewModel.mirrorFocalPointSliderValue
+    val onMirrorFocalPointSliderValueChange = concaveMirrorViewModel::mirrorFocalPointSliderValueChange
 
     var shadowDistanceTextValue by remember { mutableStateOf(0f) }
 
@@ -35,7 +39,7 @@ fun ConcaveMirrorScreen(
     ) {
         Canvas(
             modifier = Modifier
-                .size(500.dp, 500.dp)
+                .size(width = 500.dp, height = 500.dp)
                 .padding(16.dp)
         ) {
             val canvasWidth = size.width
@@ -55,13 +59,23 @@ fun ConcaveMirrorScreen(
             val shadowX by derivedStateOf { (canvasWidth / 2) - shadowDistance }
             val shadowY by derivedStateOf { (canvasHeight / 2) + shadowSize}
 
+            println("objectX : $objectX")
+            println("objectY : $objectY")
+            println("shadowSize : $shadowSize")
+            println("shadowDistance : $shadowDistance")
+            println("shadowX : $shadowX")
+            println("shadowY : $shadowY")
+            println("objectSize : $objectSize")
+            println("objectDistance : $objectDistance")
+            println("Focus : $focus")
+
             val textPaint = Paint().apply {
                 textAlign = Paint.Align.CENTER
                 textSize  = 25f
                 color = Color(0xFF000000).toArgb()
             }
 
-            /*// Light Past
+            // Light P
             drawLine(
                 color = Color.Magenta,
                 start = Offset((canvasWidth / 2), shadowY),
@@ -72,9 +86,9 @@ fun ConcaveMirrorScreen(
                 color = Color.Magenta,
                 start = Offset((canvasWidth / 2), objectY),
                 end = Offset(shadowX, shadowY)
-            )*/
+            )
 
-            // Light Come
+            // Light c
             drawLine(
                 color = Color.Red,
                 start = Offset((canvasWidth / 2), objectY),
@@ -87,14 +101,14 @@ fun ConcaveMirrorScreen(
                 end = Offset(objectX, objectY)
             )
 
-            /*// Reflect
+            // Reflct
             drawLine(
                 color = Color.Yellow,
                 start = Offset(shadowX, (canvasHeight / 2)),
                 end = Offset(shadowX, shadowY)
-            )*/
+            )
 
-            // Object
+            // Obj
             drawLine(
                 color = Color.Blue,
                 start = Offset(objectX, (canvasHeight / 2)),
@@ -119,21 +133,21 @@ fun ConcaveMirrorScreen(
                     canvasHeight)
             )
 
-            // reflect
+            // reflect text
             drawContext.canvas.nativeCanvas.apply {
                 drawText(
                     "r",
-                    canvasWidth / 2,
+                    canvasWidth / 2 - focus * 2,
                     canvasHeight / 2,
                     textPaint
                 )
             }
 
-            // focus
+            // focus f
             drawContext.canvas.nativeCanvas.apply {
                 drawText(
                     "f",
-                    canvasWidth / 2,
+                    canvasWidth / 2 - focus,
                     canvasHeight / 2,
                     textPaint
                 )
@@ -155,7 +169,7 @@ fun ConcaveMirrorScreen(
             modifier = Modifier
                 .padding(horizontal = 16.dp),
             value = objectSizeSliderValue,
-            onValueChange = { objectSizeSliderValue = it }
+            onValueChange = onObjectSizeSliderValueChange
         )
         Row(
             modifier = Modifier
@@ -172,7 +186,7 @@ fun ConcaveMirrorScreen(
             modifier = Modifier
                 .padding(horizontal = 16.dp),
             value = objectDistanceSliderValue,
-            onValueChange = { objectDistanceSliderValue = it }
+            onValueChange = onObjectDistanceSliderValueChange
         )
         Row(
             modifier = Modifier
@@ -189,7 +203,7 @@ fun ConcaveMirrorScreen(
             modifier = Modifier
                 .padding(horizontal = 16.dp),
             value = mirrorFocalPointSliderValue,
-            onValueChange = { mirrorFocalPointSliderValue = it }
+            onValueChange = onMirrorFocalPointSliderValueChange
         )
     }
 }
