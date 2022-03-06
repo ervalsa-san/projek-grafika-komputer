@@ -5,5 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 
 fun ConcaveMirrorState() {
-
+    var shadowSize by mutableStateOf(0f)
+    var shadowDistance by mutableStateOf(0f)
 }

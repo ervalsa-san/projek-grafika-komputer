@@ -59,7 +59,7 @@ fun ConcaveMirrorScreen(
             val shadowX by derivedStateOf { (canvasWidth / 2) - shadowDistance }
             val shadowY by derivedStateOf { (canvasHeight / 2) + shadowSize}
 
-            println("objectX : $objectX")
+            /*println("objectX : $objectX")
             println("objectY : $objectY")
             println("shadowSize : $shadowSize")
             println("shadowDistance : $shadowDistance")
@@ -67,7 +67,7 @@ fun ConcaveMirrorScreen(
             println("shadowY : $shadowY")
             println("objectSize : $objectSize")
             println("objectDistance : $objectDistance")
-            println("Focus : $focus")
+            println("Focus : $focus")*/
 
             val textPaint = Paint().apply {
                 textAlign = Paint.Align.CENTER
@@ -125,12 +125,8 @@ fun ConcaveMirrorScreen(
             // draw vertical Line
             drawLine(
                 color = Color.Green,
-                start = Offset(
-                    canvasWidth / 2,
-                    0f),
-                end = Offset(
-                    canvasWidth / 2,
-                    canvasHeight)
+                start = Offset(canvasWidth / 2, 0f),
+                end = Offset(canvasWidth / 2, canvasHeight)
             )
 
             // reflect text
