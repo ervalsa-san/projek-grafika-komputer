@@ -43,26 +43,188 @@ fun ConcaveMirrorCanvas(
         }
         concaveMirrorState.shadowSize = shadowSize
 
-        // Object
+        /*// Object
         drawSpecifiedLine(
             color = Color.Blue,
             start = Offset(canvasWidth / 2 - objectDistance, canvasHeight / 2),
             end = Offset(canvasWidth / 2 - objectDistance, canvasHeight / 2 - objectSize)
+        )*/
+
+        // Pencil Object
+        drawSpecifiedLine(
+            color = Color.Cyan,
+            start = Offset(canvasWidth / 2 - objectDistance, canvasHeight / 2),
+            end = Offset(canvasWidth / 2 - objectDistance, canvasHeight / 2 - objectSize)
         )
 
-       /* // Pencil Object
+        //
+        drawSpecifiedLine(
+            color = Color.Blue,
+            start = Offset(canvasWidth / 2 - objectDistance - objectSize / 4, canvasHeight / 2 - objectSize / 4),
+            end = Offset(canvasWidth / 2 - objectDistance - objectSize / 4, canvasHeight / 2 + objectSize / 24 - objectSize)
+        )
+
+        drawSpecifiedLine(
+            color = Color.Blue,
+            start = Offset(canvasWidth / 2 - objectDistance + objectSize / 4, canvasHeight / 2 - objectSize / 4),
+            end = Offset(canvasWidth / 2 - objectDistance + objectSize / 4, canvasHeight / 2 + objectSize / 24 - objectSize)
+        )
+
+        //
+        drawSpecifiedLine(
+            color = Color.Blue,
+            start = Offset(canvasWidth / 2 - objectDistance - objectSize / 12, canvasHeight / 2 - objectSize / 3),
+            end = Offset(canvasWidth / 2 - objectDistance - objectSize / 12, canvasHeight / 2 - objectSize)
+        )
+
+        drawSpecifiedLine(
+            color = Color.Blue,
+            start = Offset(canvasWidth / 2 - objectDistance + objectSize / 12, canvasHeight / 2 - objectSize / 3),
+            end = Offset(canvasWidth / 2 - objectDistance + objectSize / 12, canvasHeight / 2 - objectSize)
+        )
+
+        //
         drawSpecifiedLine(
             color = Color.Blue,
             start = Offset(canvasWidth / 2 - objectDistance, canvasHeight / 2),
-            end = Offset(canvasWidth / 2 - objectDistance, canvasHeight /2 - objectSize),
-            strokeWidth = Stroke.DefaultMiter
-        )*/
+            end = Offset(canvasWidth / 2 - objectDistance - objectSize / 4, canvasHeight / 2 - objectSize / 4)
+        )
 
-        // Reflect
+        drawSpecifiedLine(
+            color = Color.Blue,
+            start = Offset(canvasWidth / 2 - objectDistance, canvasHeight / 2),
+            end = Offset(canvasWidth / 2 - objectDistance + objectSize / 4, canvasHeight / 2 - objectSize / 4)
+        )
+
+        //
+        drawSpecifiedLine(
+            color = Color.Blue,
+            start = Offset(canvasWidth / 2 - objectDistance - objectSize / 12, canvasHeight / 2 - objectSize / 3),
+            end = Offset(canvasWidth / 2 - objectDistance - objectSize / 4, canvasHeight / 2 - objectSize / 4)
+        )
+
+        drawSpecifiedLine(
+            color = Color.Blue,
+            start = Offset(canvasWidth / 2 - objectDistance + objectSize / 12, canvasHeight / 2 - objectSize / 3),
+            end = Offset(canvasWidth / 2 - objectDistance + objectSize / 4, canvasHeight / 2 - objectSize / 4)
+        )
+
+        //
+        drawSpecifiedLine(
+            color = Color.Blue,
+            start = Offset(canvasWidth / 2 - objectDistance - objectSize / 12, canvasHeight / 2 - objectSize),
+            end = Offset(canvasWidth / 2 - objectDistance - objectSize / 4, canvasHeight / 2 + objectSize / 24 - objectSize)
+        )
+
+        drawSpecifiedLine(
+            color = Color.Blue,
+            start = Offset(canvasWidth / 2 - objectDistance + objectSize / 12, canvasHeight / 2 - objectSize),
+            end = Offset(canvasWidth / 2 - objectDistance + objectSize / 4, canvasHeight / 2 + objectSize / 24 - objectSize)
+        )
+
+        //
+        drawSpecifiedLine(
+            color = Color.Blue,
+            start = Offset(canvasWidth / 2 - objectDistance - objectSize / 12, canvasHeight / 2 - objectSize / 3),
+            end = Offset(canvasWidth / 2 - objectDistance + objectSize / 12, canvasHeight / 2 - objectSize / 3)
+        )
+
+        drawSpecifiedLine(
+            color = Color.Blue,
+            start = Offset(canvasWidth / 2 - objectDistance - objectSize / 12, canvasHeight / 2 - objectSize),
+            end = Offset(canvasWidth / 2 - objectDistance + objectSize / 12, canvasHeight / 2 - objectSize)
+        )
+
+        /*// Reflect
         drawSpecifiedLine(
             color = Color.Yellow,
             start = Offset(canvasWidth / 2 - shadowDistance, canvasHeight / 2),
             end = Offset(canvasWidth / 2 - shadowDistance, canvasHeight / 2 + shadowSize)
+        )*/
+
+        // Pencil Reflect
+        drawSpecifiedLine(
+            color = Color.Yellow,
+            start = Offset(canvasWidth / 2 - shadowDistance, canvasHeight / 2),
+            end = Offset(canvasWidth / 2 - shadowDistance, canvasHeight / 2 + shadowSize)
+        )
+
+        //
+        drawSpecifiedLine(
+            color = Color.DarkGray,
+            start = Offset(canvasWidth / 2 - shadowDistance - shadowSize / 4, canvasHeight / 2 + shadowSize / 4),
+            end = Offset(canvasWidth / 2 - shadowDistance - shadowSize / 4, canvasHeight / 2 - shadowSize / 24 + shadowSize)
+        )
+
+        drawSpecifiedLine(
+            color = Color.DarkGray,
+            start = Offset(canvasWidth / 2 - shadowDistance + shadowSize / 4, canvasHeight / 2 + shadowSize / 4),
+            end = Offset(canvasWidth / 2 - shadowDistance + shadowSize / 4, canvasHeight / 2 - shadowSize / 24 + shadowSize)
+        )
+
+        //
+        drawSpecifiedLine(
+            color = Color.DarkGray,
+            start = Offset(canvasWidth / 2 - shadowDistance - shadowSize / 12, canvasHeight / 2 + shadowSize / 3),
+            end = Offset(canvasWidth / 2 - shadowDistance - shadowSize / 12, canvasHeight / 2 + shadowSize)
+        )
+
+        drawSpecifiedLine(
+            color = Color.DarkGray,
+            start = Offset(canvasWidth / 2 - shadowDistance + shadowSize / 12, canvasHeight / 2 + shadowSize / 3),
+            end = Offset(canvasWidth / 2 - shadowDistance + shadowSize / 12, canvasHeight / 2 + shadowSize)
+        )
+
+        //
+        drawSpecifiedLine(
+            color = Color.DarkGray,
+            start = Offset(canvasWidth / 2 - shadowDistance, canvasHeight / 2),
+            end = Offset(canvasWidth / 2 - shadowDistance - shadowSize / 4, canvasHeight / 2 + shadowSize / 4)
+        )
+
+        drawSpecifiedLine(
+            color = Color.DarkGray,
+            start = Offset(canvasWidth / 2 - shadowDistance, canvasHeight / 2),
+            end = Offset(canvasWidth / 2 - shadowDistance + shadowSize / 4, canvasHeight / 2 + shadowSize / 4)
+        )
+
+        //
+        drawSpecifiedLine(
+            color = Color.DarkGray,
+            start = Offset(canvasWidth / 2 - shadowDistance - shadowSize / 12, canvasHeight / 2 + shadowSize / 3),
+            end = Offset(canvasWidth / 2 - shadowDistance - shadowSize / 4, canvasHeight / 2 + shadowSize / 4)
+        )
+
+        drawSpecifiedLine(
+            color = Color.DarkGray,
+            start = Offset(canvasWidth / 2 - shadowDistance + shadowSize / 12, canvasHeight / 2 + shadowSize / 3),
+            end = Offset(canvasWidth / 2 - shadowDistance + shadowSize / 4, canvasHeight / 2 + shadowSize / 4)
+        )
+
+        //
+        drawSpecifiedLine(
+            color = Color.DarkGray,
+            start = Offset(canvasWidth / 2 - shadowDistance - shadowSize / 12, canvasHeight / 2 + shadowSize),
+            end = Offset(canvasWidth / 2 - shadowDistance - shadowSize / 4, canvasHeight / 2 - shadowSize / 24 + shadowSize)
+        )
+
+        drawSpecifiedLine(
+            color = Color.DarkGray,
+            start = Offset(canvasWidth / 2 - shadowDistance + shadowSize / 12, canvasHeight / 2 + shadowSize),
+            end = Offset(canvasWidth / 2 - shadowDistance + shadowSize / 4, canvasHeight / 2 - shadowSize / 24 + shadowSize)
+        )
+
+        //
+        drawSpecifiedLine(
+            color = Color.DarkGray,
+            start = Offset(canvasWidth / 2 - shadowDistance - shadowSize / 12, canvasHeight / 2 + shadowSize / 3),
+            end = Offset(canvasWidth / 2 - shadowDistance + shadowSize / 12, canvasHeight / 2 + shadowSize / 3)
+        )
+
+        drawSpecifiedLine(
+            color = Color.DarkGray,
+            start = Offset(canvasWidth / 2 - shadowDistance - shadowSize / 12, canvasHeight / 2 + shadowSize),
+            end = Offset(canvasWidth / 2 - shadowDistance + shadowSize / 12, canvasHeight / 2 + shadowSize)
         )
 
         // Light Come

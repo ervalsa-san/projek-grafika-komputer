@@ -23,20 +23,10 @@ import kotlin.math.abs
 
 @Composable
 fun ConcaveMirrorScreen() {
-
-    /*val objectSizeSliderValue = concaveMirrorViewModel.objectSizeSliderValue
-    val onObjectSizeSliderValueChange = concaveMirrorViewModel::onObjectSizeSliderValueChanged
-    val objectDistanceSliderValue = concaveMirrorViewModel.objectDistanceSliderValue
-    val onObjectDistanceSliderValueChange = concaveMirrorViewModel::onObjectDistanceSliderValueChanged
-    val mirrorFocalPointSliderValue = concaveMirrorViewModel.mirrorFocalPointSliderValue
-    val onMirrorFocalPointSliderValueChange = concaveMirrorViewModel::mirrorFocalPointSliderValueChange*/
-
     // Text State
     var objectSizeTextState by remember { (mutableStateOf(148f.toString())) }
     var objectDistanceTextState by remember { (mutableStateOf(303f.toString())) }
     var mirrorFocalPointTextState by remember { (mutableStateOf(154f.toString())) }
-    var shadowSizeTextState by remember { (mutableStateOf(0f.toString())) }
-    var shadowDistanceTextState by remember { (mutableStateOf(0f.toString())) }
 
     var objectSizeFloat by remember { mutableStateOf(0f) }
     objectSizeTextState.toFloatOrNull()?.let {
@@ -56,16 +46,11 @@ fun ConcaveMirrorScreen() {
     var size by remember { mutableStateOf(IntSize.Zero) }
 
     fun Float.toRange() = -(abs(this))..(abs(this))
+
     val rangeX = (size.width / 2f).toRange()
     val rangeY = (size.height / 2f).toRange()
 
     val state = remember {ConcaveMirrorState() }
-
-
-    // Slider State
-//    var objectSizeSliderValue by remember { (mutableStateOf(0f)) }
-//    var objectDistanceSliderValue by remember { (mutableStateOf(0f)) }
-//    var mirrorFocalPointSliderValue by remember { (mutableStateOf(0f)) }
 
     Surface(
         modifier = Modifier
@@ -190,29 +175,6 @@ fun ConcaveMirrorScreen() {
                     )
                 }
             }
-        }
-    }
-}
-
-@Preview(showBackground = true, widthDp = 300)
-@Composable
-fun mainControl() {
-    RoundedCornerBox(
-        shape = RoundedCornerShape(10.dp)
-    )
-}
-
-@Composable
-fun RoundedCornerBox(shape: Shape) {
-    Column() {
-        Box(
-            modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 16.dp)
-                .height(100.dp)
-                .fillMaxWidth()
-                .clip(shape)
-                .background(Color.Red)
-        ) {
         }
     }
 }

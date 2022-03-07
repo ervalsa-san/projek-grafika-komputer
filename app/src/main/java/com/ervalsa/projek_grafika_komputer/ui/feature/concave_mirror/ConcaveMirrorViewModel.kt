@@ -6,19 +6,5 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 
 class ConcaveMirrorViewModel : ViewModel() {
-    var objectSizeSliderValue by mutableStateOf(0f)
-    var objectDistanceSliderValue by mutableStateOf(0f)
-    var mirrorFocalPointSliderValue by mutableStateOf(0f)
 
-    fun onObjectSizeSliderValueChanged(value: Float) {
-        objectSizeSliderValue = value
-    }
-
-    fun onObjectDistanceSliderValueChanged(value: Float) {
-        objectDistanceSliderValue = value
-    }
-
-    fun mirrorFocalPointSliderValueChange(value: Float) {
-        mirrorFocalPointSliderValue = value
-    }
 }
