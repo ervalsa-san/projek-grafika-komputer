@@ -11,13 +11,20 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import kotlin.math.abs
 
 @Composable
-fun ConcaveMirrorScreen() {
+fun ConcaveMirrorScreen(
+    concaveMirrorState: ConcaveMirrorState
+) {
 
     /*val objectSizeSliderValue = concaveMirrorViewModel.objectSizeSliderValue
     val onObjectSizeSliderValueChange = concaveMirrorViewModel::onObjectSizeSliderValueChanged
@@ -27,16 +34,40 @@ fun ConcaveMirrorScreen() {
     val onMirrorFocalPointSliderValueChange = concaveMirrorViewModel::mirrorFocalPointSliderValueChange*/
 
     // Text State
-    var objectSizeTextState by remember { (mutableStateOf(0f.toString())) }
-    var objectDistanceTextState by remember { (mutableStateOf(0f.toString())) }
-    var mirrorFocalPointTextState by remember { (mutableStateOf(0f.toString())) }
+    var objectSizeTextState by remember { (mutableStateOf(148f.toString())) }
+    var objectDistanceTextState by remember { (mutableStateOf(303f.toString())) }
+    var mirrorFocalPointTextState by remember { (mutableStateOf(154f.toString())) }
     var shadowSizeTextState by remember { (mutableStateOf(0f.toString())) }
     var shadowDistanceTextState by remember { (mutableStateOf(0f.toString())) }
 
+    var objectSizeFloat by remember { mutableStateOf(0f) }
+    objectSizeTextState.toFloatOrNull()?.let {
+        objectSizeFloat = it
+    }
+
+    var objectDistanceFloat by remember { mutableStateOf(0f) }
+    objectDistanceTextState.toFloatOrNull()?.let {
+        objectDistanceFloat = it
+    }
+
+    var mirrorFocalPointFloat by remember { mutableStateOf(0f) }
+    mirrorFocalPointTextState.toFloatOrNull()?.let {
+        mirrorFocalPointFloat = it
+    }
+
+    var size by remember { mutableStateOf(IntSize.Zero) }
+
+    fun Float.toRange() = -(abs(this))..(abs(this))
+    val rangeX = (size.width / 2f).toRange()
+    val rangeY = (size.height / 2f).toRange()
+
+    val state = remember {ConcaveMirrorState() }
+
+
     // Slider State
-    var objectSizeSliderValue by remember { (mutableStateOf(0f)) }
-    var objectDistanceSliderValue by remember { (mutableStateOf(0f)) }
-    var mirrorFocalPointSliderValue by remember { (mutableStateOf(0f)) }
+//    var objectSizeSliderValue by remember { (mutableStateOf(0f)) }
+//    var objectDistanceSliderValue by remember { (mutableStateOf(0f)) }
+//    var mirrorFocalPointSliderValue by remember { (mutableStateOf(0f)) }
 
     Surface(
         modifier = Modifier
@@ -44,18 +75,22 @@ fun ConcaveMirrorScreen() {
     ) {
         // Canvas
         Column(
-            modifier = Modifier
-                .fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center
         ) {
-            ConcaveMirrorCanvas(
-                modifier = Modifier.fillMaxSize(),
-                objectDistance = 303f,
-                objectSize = 148f,
-                focalPoint = 154f,
-                shadowDistance = 313f,
-                shadowSize = 152f
-            )
+            Box {
+                ConcaveMirrorCanvas(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .onSizeChanged {
+                            size = it
+                        },
+                    objectDistance = objectDistanceFloat,
+                    objectSize = objectSizeFloat,
+                    focalPoint = mirrorFocalPointFloat,
+                    concaveMirrorState =state
+                )
+            }
         }
 
         // Shadow Status
@@ -66,16 +101,16 @@ fun ConcaveMirrorScreen() {
         ) {
             TextField(
                 modifier = Modifier.weight(1f),
-                value = shadowDistanceTextState,
-                onValueChange = { shadowDistanceTextState = it },
+                value = state.shadowDistance.toString(),
+                onValueChange = { },
                 label = { Text(text = "Jarak Bayangan") },
                 readOnly = true
             )
             Spacer(modifier = Modifier.width(16.dp))
             TextField(
                 modifier = Modifier.weight(1f),
-                value = shadowSizeTextState,
-                onValueChange = { shadowSizeTextState = it },
+                value = state.shadowSize.toString(),
+                onValueChange = {  },
                 label = { Text(text = "Ukuran Bayangan") },
                 readOnly = true
             )
@@ -84,7 +119,8 @@ fun ConcaveMirrorScreen() {
         // Main Control / Object Control
         Column(
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxSize()
+                .padding(vertical = 8.dp),
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.Start
         ) {
@@ -98,8 +134,9 @@ fun ConcaveMirrorScreen() {
                 Row() {
                     Slider(
                         modifier = Modifier.weight(2f),
-                        value = objectSizeSliderValue,
-                        onValueChange = { objectSizeSliderValue = it }
+                        value = objectSizeFloat,
+                        valueRange = rangeY,
+                        onValueChange = { objectSizeTextState = it.toString() }
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     TextField(
@@ -120,8 +157,9 @@ fun ConcaveMirrorScreen() {
                 Row() {
                     Slider(
                         modifier = Modifier.weight(2f),
-                        value = objectDistanceSliderValue,
-                        onValueChange = { objectDistanceSliderValue = it }
+                        valueRange = rangeX,
+                        value = objectDistanceFloat,
+                        onValueChange = { objectDistanceTextState = it.toString() }
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     TextField(
@@ -142,8 +180,9 @@ fun ConcaveMirrorScreen() {
                 Row() {
                     Slider(
                         modifier = Modifier.weight(2f),
-                        value = mirrorFocalPointSliderValue,
-                        onValueChange = { mirrorFocalPointSliderValue = it }
+                        value = mirrorFocalPointFloat,
+                        valueRange = rangeX,
+                        onValueChange = { mirrorFocalPointTextState = it.toString() }
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     TextField(
@@ -168,12 +207,13 @@ fun mainControl() {
 @Composable
 fun RoundedCornerBox(shape: Shape) {
     Column() {
-        Box(modifier = Modifier
-            .padding(horizontal = 16.dp, vertical = 16.dp)
-            .height(100.dp)
-            .fillMaxWidth()
-            .clip(shape)
-            .background(Color.Red)
+        Box(
+            modifier = Modifier
+                .padding(horizontal = 16.dp, vertical = 16.dp)
+                .height(100.dp)
+                .fillMaxWidth()
+                .clip(shape)
+                .background(Color.Red)
         ) {
         }
     }

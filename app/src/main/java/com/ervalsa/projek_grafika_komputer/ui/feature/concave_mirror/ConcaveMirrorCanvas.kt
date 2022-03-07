@@ -5,77 +5,90 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.isSpecified
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toArgb
+import java.lang.ArithmeticException
 
 @Composable
 fun ConcaveMirrorCanvas(
     modifier: Modifier,
     objectSize: Float,
     objectDistance: Float,
-    shadowDistance: Float,
-    shadowSize: Float,
-    focalPoint: Float
+    focalPoint: Float,
+    concaveMirrorState: ConcaveMirrorState
 ) {
     Canvas(modifier = modifier) {
         val canvasWidth = size.width
         val canvasHeight = size.height
 
+        // Rumus Ajaib
+        var shadowDistance = 0f
+        try {
+            shadowDistance = objectDistance * focalPoint / (objectDistance - focalPoint)
+        } catch (e: ArithmeticException) {
+            print(e.stackTrace)
+        }
+        concaveMirrorState.shadowDistance = shadowDistance
+
+        var shadowSize = 0f
+        try {
+            shadowSize = shadowDistance * objectSize / objectDistance
+        } catch (e: ArithmeticException) {
+            print(e.stackTrace)
+        }
+        concaveMirrorState.shadowSize = shadowSize
+
         // Object
-        /*drawLine(
+        drawSpecifiedLine(
             color = Color.Blue,
             start = Offset(canvasWidth / 2 - objectDistance, canvasHeight / 2),
-            end = Offset(canvasWidth / 2 - objectDistance, canvasHeight / 2 - objectSize),
-            strokeWidth = Stroke.DefaultMiter
-        )*/
+            end = Offset(canvasWidth / 2 - objectDistance, canvasHeight / 2 - objectSize)
+        )
 
-        // Pencil Object
-        drawLine(
+       /* // Pencil Object
+        drawSpecifiedLine(
             color = Color.Blue,
             start = Offset(canvasWidth / 2 - objectDistance, canvasHeight / 2),
             end = Offset(canvasWidth / 2 - objectDistance, canvasHeight /2 - objectSize),
             strokeWidth = Stroke.DefaultMiter
-        )
+        )*/
 
         // Reflect
-        drawLine(
+        drawSpecifiedLine(
             color = Color.Yellow,
             start = Offset(canvasWidth / 2 - shadowDistance, canvasHeight / 2),
-            end = Offset(canvasWidth / 2 - shadowDistance, canvasHeight / 2 + shadowSize),
-            strokeWidth = Stroke.DefaultMiter
+            end = Offset(canvasWidth / 2 - shadowDistance, canvasHeight / 2 + shadowSize)
         )
 
         // Light Come
-        drawLine(
+        drawSpecifiedLine(
             color = Color.Red,
             start = Offset(canvasWidth / 2, canvasHeight / 2 - objectSize),
-            end = Offset(canvasWidth / 2 - objectDistance, canvasHeight / 2 - objectSize),
-            strokeWidth = Stroke.DefaultMiter
+            end = Offset(canvasWidth / 2 - objectDistance, canvasHeight / 2 - objectSize)
         )
 
-        drawLine(
+        drawSpecifiedLine(
             color = Color.Red,
             start = Offset(canvasWidth / 2, canvasHeight / 2 + shadowSize),
-            end = Offset(canvasWidth / 2 - objectDistance, canvasHeight / 2 - objectSize),
-            strokeWidth = Stroke.DefaultMiter
+            end = Offset(canvasWidth / 2 - objectDistance, canvasHeight / 2 - objectSize)
         )
 
         // Light Past
-        drawLine(
+        drawSpecifiedLine(
             color = Color.Magenta,
             start = Offset(canvasWidth / 2, canvasHeight / 2 + shadowSize),
-            end = Offset(canvasWidth / 2 - shadowDistance, canvasHeight / 2 + shadowSize),
-            strokeWidth = Stroke.DefaultMiter
+            end = Offset(canvasWidth / 2 - shadowDistance, canvasHeight / 2 + shadowSize)
         )
 
-        drawLine(
+        drawSpecifiedLine(
             color = Color.Magenta,
             start = Offset(canvasWidth / 2, canvasHeight / 2 - objectSize),
-            end = Offset(canvasWidth / 2 - shadowDistance, canvasHeight / 2 + shadowSize),
-            strokeWidth = Stroke.DefaultMiter
+            end = Offset(canvasWidth / 2 - shadowDistance, canvasHeight / 2 + shadowSize)
         )
 
         // Text F and R
@@ -101,19 +114,23 @@ fun ConcaveMirrorCanvas(
         }
 
         // Horizontal Line
-        drawLine(
+        drawSpecifiedLine(
             color = Color.Gray,
             start = Offset(0f, canvasHeight / 2),
             end = Offset(canvasWidth, canvasHeight / 2),
-            strokeWidth = Stroke.DefaultMiter
         )
 
         // Vertical Line
-        drawLine(
+        drawSpecifiedLine(
             color = Color.Gray,
             start = Offset(canvasWidth / 2, 0f),
             end = Offset(canvasWidth / 2, canvasHeight),
-            strokeWidth = Stroke.DefaultMiter
         )
+    }
+}
+
+fun DrawScope.drawSpecifiedLine(color: Color, start: Offset, end: Offset) {
+    if (start.isSpecified && end.isSpecified) {
+        drawLine(color = color, start = start, end = end, strokeWidth = Stroke.DefaultMiter)
     }
 }

@@ -9,6 +9,7 @@ import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import com.ervalsa.projek_grafika_komputer.ui.feature.concave_mirror.ConcaveMirrorCanvas
 import com.ervalsa.projek_grafika_komputer.ui.feature.concave_mirror.ConcaveMirrorScreen
+import com.ervalsa.projek_grafika_komputer.ui.feature.concave_mirror.ConcaveMirrorState
 import com.ervalsa.projek_grafika_komputer.ui.feature.concave_mirror.ConcaveMirrorViewModel
 import com.ervalsa.projek_grafika_komputer.ui.theme.ProjekgrafikakomputerTheme
 
@@ -27,7 +28,9 @@ class MainActivity : ComponentActivity() {
                         shadowDistance = 313f,
                         shadowSize = 152f
                     )*/
-                    ConcaveMirrorScreen()
+                    ConcaveMirrorScreen(
+                        concaveMirrorState = ConcaveMirrorState()
+                    )
                 }
             }
         }
