@@ -19,20 +19,15 @@ class MainActivity : ComponentActivity() {
             ProjekgrafikakomputerTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    ConcaveMirrorCanvas(
+                    /*ConcaveMirrorCanvas(
                         modifier = Modifier.fillMaxSize(),
                         objectDistance = 303f,
                         objectSize = 148f,
                         focalPoint = 154f,
                         shadowDistance = 313f,
                         shadowSize = 152f
-                    )
-                    /*ConcaveMirrorScreen(
-                        objectDistance = 303f,
-                        objectSize = 148f,
-                        focus = 154f,
-                        concaveMirrorViewModel = ConcaveMirrorViewModel()
                     )*/
+                    ConcaveMirrorScreen()
                 }
             }
         }

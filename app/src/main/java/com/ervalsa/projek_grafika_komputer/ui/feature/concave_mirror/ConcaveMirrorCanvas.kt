@@ -25,10 +25,18 @@ fun ConcaveMirrorCanvas(
         val canvasHeight = size.height
 
         // Object
-        drawLine(
+        /*drawLine(
             color = Color.Blue,
             start = Offset(canvasWidth / 2 - objectDistance, canvasHeight / 2),
             end = Offset(canvasWidth / 2 - objectDistance, canvasHeight / 2 - objectSize),
+            strokeWidth = Stroke.DefaultMiter
+        )*/
+
+        // Pencil Object
+        drawLine(
+            color = Color.Blue,
+            start = Offset(canvasWidth / 2 - objectDistance, canvasHeight / 2),
+            end = Offset(canvasWidth / 2 - objectDistance, canvasHeight /2 - objectSize),
             strokeWidth = Stroke.DefaultMiter
         )
 
@@ -44,7 +52,7 @@ fun ConcaveMirrorCanvas(
         drawLine(
             color = Color.Red,
             start = Offset(canvasWidth / 2, canvasHeight / 2 - objectSize),
-            end = Offset(canvasWidth / 2 - shadowDistance, canvasHeight / 2 + shadowSize),
+            end = Offset(canvasWidth / 2 - objectDistance, canvasHeight / 2 - objectSize),
             strokeWidth = Stroke.DefaultMiter
         )
 
@@ -65,7 +73,7 @@ fun ConcaveMirrorCanvas(
 
         drawLine(
             color = Color.Magenta,
-            start = Offset(canvasWidth / 2, canvasHeight - objectSize),
+            start = Offset(canvasWidth / 2, canvasHeight / 2 - objectSize),
             end = Offset(canvasWidth / 2 - shadowDistance, canvasHeight / 2 + shadowSize),
             strokeWidth = Stroke.DefaultMiter
         )
