@@ -22,9 +22,7 @@ import androidx.compose.ui.unit.dp
 import kotlin.math.abs
 
 @Composable
-fun ConcaveMirrorScreen(
-    concaveMirrorState: ConcaveMirrorState
-) {
+fun ConcaveMirrorScreen() {
 
     /*val objectSizeSliderValue = concaveMirrorViewModel.objectSizeSliderValue
     val onObjectSizeSliderValueChange = concaveMirrorViewModel::onObjectSizeSliderValueChanged

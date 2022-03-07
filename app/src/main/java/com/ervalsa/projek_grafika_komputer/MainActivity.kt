@@ -28,9 +28,7 @@ class MainActivity : ComponentActivity() {
                         shadowDistance = 313f,
                         shadowSize = 152f
                     )*/
-                    ConcaveMirrorScreen(
-                        concaveMirrorState = ConcaveMirrorState()
-                    )
+                    ConcaveMirrorScreen()
                 }
             }
         }
