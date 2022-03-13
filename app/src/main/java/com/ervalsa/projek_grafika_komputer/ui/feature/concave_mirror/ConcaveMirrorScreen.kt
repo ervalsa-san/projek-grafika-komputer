@@ -49,6 +49,7 @@ fun ConcaveMirrorScreen() {
 
     val rangeX = (size.width / 2f).toRange()
     val rangeY = (size.height / 2f).toRange()
+    val rangeFocalpoint = 0f..(size.width / 2f)
 
     val state = remember {ConcaveMirrorState() }
 
@@ -164,7 +165,7 @@ fun ConcaveMirrorScreen() {
                     Slider(
                         modifier = Modifier.weight(2f),
                         value = mirrorFocalPointFloat,
-                        valueRange = rangeX,
+                        valueRange = rangeFocalpoint,
                         onValueChange = { mirrorFocalPointTextState = it.toString() }
                     )
                     Spacer(modifier = Modifier.width(4.dp))
