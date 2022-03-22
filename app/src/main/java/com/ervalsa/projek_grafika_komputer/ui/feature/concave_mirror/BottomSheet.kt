@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 
 @ExperimentalMaterialApi
 @Composable
-fun  BottomSheet() {
+fun BottomSheet() {
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed)
     )
@@ -29,7 +29,7 @@ fun  BottomSheet() {
                 Text(text = "Hello from sheet")
             }
         },
-        sheetPeekHeight = 0.dp
+        sheetPeekHeight = 40.dp
     ) {
 
     }

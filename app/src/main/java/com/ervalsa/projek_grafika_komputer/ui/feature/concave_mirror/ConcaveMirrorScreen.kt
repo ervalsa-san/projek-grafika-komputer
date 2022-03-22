@@ -1,32 +1,25 @@
 package com.ervalsa.projek_grafika_komputer.ui.feature.concave_mirror
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Slider
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.clipToBounds
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import kotlin.math.abs
 
+@ExperimentalMaterialApi
 @Composable
-fun ConcaveMirrorScreen() {
+fun ConcaveMirrorScreen(
+    /*concaveMirrorViewModel: ConcaveMirrorViewModel*/
+) {
     // Text State
-    var objectSizeTextState by remember { (mutableStateOf(148f.toString())) }
-    var objectDistanceTextState by remember { (mutableStateOf(303f.toString())) }
-    var mirrorFocalPointTextState by remember { (mutableStateOf(154f.toString())) }
+    var objectSizeTextState by rememberSaveable{ (mutableStateOf(148f.toString())) }
+    var objectDistanceTextState by rememberSaveable { (mutableStateOf(303f.toString())) }
+    var mirrorFocalPointTextState by rememberSaveable { (mutableStateOf(154f.toString())) }
 
     var objectSizeFloat by remember { mutableStateOf(0f) }
     objectSizeTextState.toFloatOrNull()?.let {
@@ -51,7 +44,7 @@ fun ConcaveMirrorScreen() {
     val rangeY = (size.height / 2f).toRange()
     val rangeFocalpoint = 0f..(size.width / 2f)
 
-    val state = remember {ConcaveMirrorState() }
+    val state = remember { ConcaveMirrorState() }
 
     Surface(
         modifier = Modifier

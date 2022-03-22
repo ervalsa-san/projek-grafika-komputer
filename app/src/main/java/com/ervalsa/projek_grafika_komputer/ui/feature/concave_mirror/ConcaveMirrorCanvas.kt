@@ -229,7 +229,7 @@ fun ConcaveMirrorCanvas(
 
         // Light Come
         drawSpecifiedLine(
-            color = Color.Red,
+            color = Color.Cyan,
             start = Offset(canvasWidth / 2, canvasHeight / 2 - objectSize),
             end = Offset(canvasWidth / 2 - objectDistance, canvasHeight / 2 - objectSize)
         )
@@ -296,3 +296,4 @@ fun DrawScope.drawSpecifiedLine(color: Color, start: Offset, end: Offset) {
         drawLine(color = color, start = start, end = end, strokeWidth = Stroke.DefaultMiter)
     }
 }
+
