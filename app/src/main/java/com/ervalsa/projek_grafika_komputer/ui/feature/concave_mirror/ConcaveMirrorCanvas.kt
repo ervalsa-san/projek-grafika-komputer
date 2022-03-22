@@ -43,13 +43,6 @@ fun ConcaveMirrorCanvas(
         }
         concaveMirrorState.shadowSize = shadowSize
 
-        /*// Object
-        drawSpecifiedLine(
-            color = Color.Blue,
-            start = Offset(canvasWidth / 2 - objectDistance, canvasHeight / 2),
-            end = Offset(canvasWidth / 2 - objectDistance, canvasHeight / 2 - objectSize)
-        )*/
-
         // Pencil Object
         drawSpecifiedLine(
             color = Color.Cyan,
@@ -134,13 +127,6 @@ fun ConcaveMirrorCanvas(
             start = Offset(canvasWidth / 2 - objectDistance - objectSize / 12, canvasHeight / 2 - objectSize),
             end = Offset(canvasWidth / 2 - objectDistance + objectSize / 12, canvasHeight / 2 - objectSize)
         )
-
-        /*// Reflect
-        drawSpecifiedLine(
-            color = Color.Yellow,
-            start = Offset(canvasWidth / 2 - shadowDistance, canvasHeight / 2),
-            end = Offset(canvasWidth / 2 - shadowDistance, canvasHeight / 2 + shadowSize)
-        )*/
 
         // Pencil Reflect
         drawSpecifiedLine(
@@ -229,7 +215,7 @@ fun ConcaveMirrorCanvas(
 
         // Light Come
         drawSpecifiedLine(
-            color = Color.Cyan,
+            color = Color.Red,
             start = Offset(canvasWidth / 2, canvasHeight / 2 - objectSize),
             end = Offset(canvasWidth / 2 - objectDistance, canvasHeight / 2 - objectSize)
         )
