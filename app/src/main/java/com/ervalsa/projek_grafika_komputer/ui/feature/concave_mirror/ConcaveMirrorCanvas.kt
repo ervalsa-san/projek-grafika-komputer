@@ -4,10 +4,7 @@ import android.graphics.Paint
 import androidx.compose.foundation.Canvas
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Rect
-import androidx.compose.ui.geometry.isSpecified
-import androidx.compose.ui.geometry.isUnspecified
+import androidx.compose.ui.geometry.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.drawscope.DrawScope
@@ -229,8 +226,7 @@ fun ConcaveMirrorCanvas(
         drawSpecifiedLine(
             color = Color.Red,
             start = Offset(pointX, pointY - objectSize),
-            end = dda(pointX, pointY - objectSize, pointX - objectDistance, pointY - objectSize
-            )
+            end = dda(pointX, pointY - objectSize, pointX - objectDistance, pointY - objectSize)
         )
 
         // Cahaya Miring
@@ -242,11 +238,8 @@ fun ConcaveMirrorCanvas(
 
         drawSpecifiedLine(
             color = Color.Red,
-            start = Offset(pointX, pointY + shadowSize),
-            end = dda(
-                pointX, pointY + shadowSize,
-                pointX - objectDistance, pointY - objectSize
-            )
+            start = Offset(pointX, shadowY),
+            end = dda(pointX, shadowY, objectX, objectY)
         )
 
 
@@ -261,10 +254,7 @@ fun ConcaveMirrorCanvas(
         drawSpecifiedLine(
             color = Color.Magenta,
             start = Offset(pointX, pointY + shadowSize),
-            end = dda(
-                pointX, pointY + shadowSize,
-                pointX - shadowDistance, pointY + shadowSize
-            )
+            end = dda(pointX, pointY + shadowSize, pointX - shadowDistance, pointY + shadowSize)
         )
 
         // Cahaya Miring
@@ -276,11 +266,8 @@ fun ConcaveMirrorCanvas(
 
         drawSpecifiedLine(
             color = Color.Magenta,
-            start = Offset(pointX, pointY - objectSize),
-            end = dda(
-                pointX, pointY - objectSize,
-                pointX - shadowDistance, pointY + shadowSize
-            )
+            start = Offset(pointX, objectY),
+            end = dda(pointX, objectY, shadowX, shadowY)
         )
 
         // Text F and R
@@ -333,17 +320,22 @@ fun DrawScope.dda(x0: Float, y0: Float, x1: Float, y1: Float): Offset {
     val incX = dx / steps
     val incY = dy / steps
 
-    if (Offset(incX, incY).isUnspecified) {
-        return Offset(incX, incY)
-    }
-
     var x = x0
     var y = y0
 
     var index = 0
     var offset = Offset(x, y)
     val rect = Rect(Offset.Zero, size)
-    while (index < steps.toInt() || rect.contains(offset)) {
+
+    if (Offset(incX, incY).isUnspecified) {
+        return Offset(incX, incY)
+    }
+
+    if (!Offset(incX, incY).isFinite) {
+        return Offset(incX, incY)
+    }
+
+    while (index < steps || rect.contains(offset)) {
         x += incX
         y += incY
 
