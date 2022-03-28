@@ -1,10 +1,12 @@
 package com.ervalsa.projek_grafika_komputer.ui.feature.concave_mirror
 
 import android.graphics.Paint
+import android.graphics.Point
 import androidx.compose.foundation.Canvas
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.isSpecified
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
@@ -13,6 +15,8 @@ import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toArgb
 import java.lang.ArithmeticException
+import kotlin.math.abs
+import kotlin.math.max
 
 @Composable
 fun ConcaveMirrorCanvas(
@@ -26,7 +30,7 @@ fun ConcaveMirrorCanvas(
         val canvasWidth = size.width
         val canvasHeight = size.height
 
-        // Rumus Ajaib
+        // Rumus Formula
         var shadowDistance = 0f
         try {
             shadowDistance = objectDistance * focalPoint / (objectDistance - focalPoint)
@@ -43,200 +47,237 @@ fun ConcaveMirrorCanvas(
         }
         concaveMirrorState.shadowSize = shadowSize
 
+        // Point X and Y
+        val pointX = canvasWidth / 2
+        val pointY = canvasHeight / 2
+
+        // Object
+        val objectX = pointX - objectDistance
+        val objectY = pointY - objectSize
+
+        // Shadow
+        val shadowX = pointX - shadowDistance
+        val shadowY = pointY + shadowSize
+
         // Pencil Object
         drawSpecifiedLine(
             color = Color.Cyan,
-            start = Offset(canvasWidth / 2 - objectDistance, canvasHeight / 2),
-            end = Offset(canvasWidth / 2 - objectDistance, canvasHeight / 2 - objectSize)
-        )
-
-        //
-        drawSpecifiedLine(
-            color = Color.Blue,
-            start = Offset(canvasWidth / 2 - objectDistance - objectSize / 4, canvasHeight / 2 - objectSize / 4),
-            end = Offset(canvasWidth / 2 - objectDistance - objectSize / 4, canvasHeight / 2 + objectSize / 24 - objectSize)
+            start = Offset(x = objectX, y = pointY),
+            end = Offset(x = objectX, y = objectY)
         )
 
         drawSpecifiedLine(
             color = Color.Blue,
-            start = Offset(canvasWidth / 2 - objectDistance + objectSize / 4, canvasHeight / 2 - objectSize / 4),
-            end = Offset(canvasWidth / 2 - objectDistance + objectSize / 4, canvasHeight / 2 + objectSize / 24 - objectSize)
-        )
-
-        //
-        drawSpecifiedLine(
-            color = Color.Blue,
-            start = Offset(canvasWidth / 2 - objectDistance - objectSize / 12, canvasHeight / 2 - objectSize / 3),
-            end = Offset(canvasWidth / 2 - objectDistance - objectSize / 12, canvasHeight / 2 - objectSize)
+            start = Offset(pointX - objectDistance - objectSize / 4, pointY - objectSize / 4),
+            end = Offset(pointX - objectDistance - objectSize / 4, pointY + objectSize / 24 - objectSize)
         )
 
         drawSpecifiedLine(
             color = Color.Blue,
-            start = Offset(canvasWidth / 2 - objectDistance + objectSize / 12, canvasHeight / 2 - objectSize / 3),
-            end = Offset(canvasWidth / 2 - objectDistance + objectSize / 12, canvasHeight / 2 - objectSize)
-        )
-
-        //
-        drawSpecifiedLine(
-            color = Color.Blue,
-            start = Offset(canvasWidth / 2 - objectDistance, canvasHeight / 2),
-            end = Offset(canvasWidth / 2 - objectDistance - objectSize / 4, canvasHeight / 2 - objectSize / 4)
+            start = Offset(pointX - objectDistance + objectSize / 4, pointY - objectSize / 4),
+            end = Offset(pointX - objectDistance + objectSize / 4, pointY + objectSize / 24 - objectSize)
         )
 
         drawSpecifiedLine(
             color = Color.Blue,
-            start = Offset(canvasWidth / 2 - objectDistance, canvasHeight / 2),
-            end = Offset(canvasWidth / 2 - objectDistance + objectSize / 4, canvasHeight / 2 - objectSize / 4)
-        )
-
-        //
-        drawSpecifiedLine(
-            color = Color.Blue,
-            start = Offset(canvasWidth / 2 - objectDistance - objectSize / 12, canvasHeight / 2 - objectSize / 3),
-            end = Offset(canvasWidth / 2 - objectDistance - objectSize / 4, canvasHeight / 2 - objectSize / 4)
+            start = Offset(pointX - objectDistance - objectSize / 12, pointY - objectSize / 3),
+            end = Offset(pointX - objectDistance - objectSize / 12, pointY - objectSize)
         )
 
         drawSpecifiedLine(
             color = Color.Blue,
-            start = Offset(canvasWidth / 2 - objectDistance + objectSize / 12, canvasHeight / 2 - objectSize / 3),
-            end = Offset(canvasWidth / 2 - objectDistance + objectSize / 4, canvasHeight / 2 - objectSize / 4)
-        )
-
-        //
-        drawSpecifiedLine(
-            color = Color.Blue,
-            start = Offset(canvasWidth / 2 - objectDistance - objectSize / 12, canvasHeight / 2 - objectSize),
-            end = Offset(canvasWidth / 2 - objectDistance - objectSize / 4, canvasHeight / 2 + objectSize / 24 - objectSize)
+            start = Offset(pointX - objectDistance + objectSize / 12, pointY - objectSize / 3),
+            end = Offset(pointX - objectDistance + objectSize / 12, pointY - objectSize)
         )
 
         drawSpecifiedLine(
             color = Color.Blue,
-            start = Offset(canvasWidth / 2 - objectDistance + objectSize / 12, canvasHeight / 2 - objectSize),
-            end = Offset(canvasWidth / 2 - objectDistance + objectSize / 4, canvasHeight / 2 + objectSize / 24 - objectSize)
-        )
-
-        //
-        drawSpecifiedLine(
-            color = Color.Blue,
-            start = Offset(canvasWidth / 2 - objectDistance - objectSize / 12, canvasHeight / 2 - objectSize / 3),
-            end = Offset(canvasWidth / 2 - objectDistance + objectSize / 12, canvasHeight / 2 - objectSize / 3)
+            start = Offset(pointX - objectDistance, pointY),
+            end = Offset(pointX - objectDistance - objectSize / 4, pointY - objectSize / 4)
         )
 
         drawSpecifiedLine(
             color = Color.Blue,
-            start = Offset(canvasWidth / 2 - objectDistance - objectSize / 12, canvasHeight / 2 - objectSize),
-            end = Offset(canvasWidth / 2 - objectDistance + objectSize / 12, canvasHeight / 2 - objectSize)
+            start = Offset(pointX - objectDistance, pointY),
+            end = Offset(pointX - objectDistance + objectSize / 4, pointY - objectSize / 4)
+        )
+
+        drawSpecifiedLine(
+            color = Color.Blue,
+            start = Offset(pointX - objectDistance - objectSize / 12, pointY - objectSize / 3),
+            end = Offset(pointX - objectDistance - objectSize / 4, pointY - objectSize / 4)
+        )
+
+        drawSpecifiedLine(
+            color = Color.Blue,
+            start = Offset(pointX - objectDistance + objectSize / 12, pointY - objectSize / 3),
+            end = Offset(pointX - objectDistance + objectSize / 4, pointY - objectSize / 4)
+        )
+
+        drawSpecifiedLine(
+            color = Color.Blue,
+            start = Offset(pointX - objectDistance - objectSize / 12, pointY - objectSize),
+            end = Offset(pointX - objectDistance - objectSize / 4, pointY + objectSize / 24 - objectSize)
+        )
+
+        drawSpecifiedLine(
+            color = Color.Blue,
+            start = Offset(pointX - objectDistance + objectSize / 12, pointY - objectSize),
+            end = Offset(pointX - objectDistance + objectSize / 4, pointY + objectSize / 24 - objectSize)
+        )
+
+        drawSpecifiedLine(
+            color = Color.Blue,
+            start = Offset(pointX - objectDistance - objectSize / 12, pointY - objectSize / 3),
+            end = Offset(pointX - objectDistance + objectSize / 12, pointY - objectSize / 3)
+        )
+
+        drawSpecifiedLine(
+            color = Color.Blue,
+            start = Offset(pointX - objectDistance - objectSize / 12, pointY - objectSize),
+            end = Offset(pointX - objectDistance + objectSize / 12, pointY - objectSize)
         )
 
         // Pencil Reflect
         drawSpecifiedLine(
             color = Color.Yellow,
-            start = Offset(canvasWidth / 2 - shadowDistance, canvasHeight / 2),
-            end = Offset(canvasWidth / 2 - shadowDistance, canvasHeight / 2 + shadowSize)
-        )
-
-        //
-        drawSpecifiedLine(
-            color = Color.DarkGray,
-            start = Offset(canvasWidth / 2 - shadowDistance - shadowSize / 4, canvasHeight / 2 + shadowSize / 4),
-            end = Offset(canvasWidth / 2 - shadowDistance - shadowSize / 4, canvasHeight / 2 - shadowSize / 24 + shadowSize)
+            start = Offset(x = shadowX, y = pointY),
+            end = Offset(x = shadowX, y = shadowY)
         )
 
         drawSpecifiedLine(
             color = Color.DarkGray,
-            start = Offset(canvasWidth / 2 - shadowDistance + shadowSize / 4, canvasHeight / 2 + shadowSize / 4),
-            end = Offset(canvasWidth / 2 - shadowDistance + shadowSize / 4, canvasHeight / 2 - shadowSize / 24 + shadowSize)
-        )
-
-        //
-        drawSpecifiedLine(
-            color = Color.DarkGray,
-            start = Offset(canvasWidth / 2 - shadowDistance - shadowSize / 12, canvasHeight / 2 + shadowSize / 3),
-            end = Offset(canvasWidth / 2 - shadowDistance - shadowSize / 12, canvasHeight / 2 + shadowSize)
+            start = Offset(pointX - shadowDistance - shadowSize / 4, pointY + shadowSize / 4),
+            end = Offset(pointX - shadowDistance - shadowSize / 4, pointY - shadowSize / 24 + shadowSize)
         )
 
         drawSpecifiedLine(
             color = Color.DarkGray,
-            start = Offset(canvasWidth / 2 - shadowDistance + shadowSize / 12, canvasHeight / 2 + shadowSize / 3),
-            end = Offset(canvasWidth / 2 - shadowDistance + shadowSize / 12, canvasHeight / 2 + shadowSize)
-        )
-
-        //
-        drawSpecifiedLine(
-            color = Color.DarkGray,
-            start = Offset(canvasWidth / 2 - shadowDistance, canvasHeight / 2),
-            end = Offset(canvasWidth / 2 - shadowDistance - shadowSize / 4, canvasHeight / 2 + shadowSize / 4)
+            start = Offset(pointX - shadowDistance + shadowSize / 4, pointY + shadowSize / 4),
+            end = Offset(pointX - shadowDistance + shadowSize / 4, pointY - shadowSize / 24 + shadowSize)
         )
 
         drawSpecifiedLine(
             color = Color.DarkGray,
-            start = Offset(canvasWidth / 2 - shadowDistance, canvasHeight / 2),
-            end = Offset(canvasWidth / 2 - shadowDistance + shadowSize / 4, canvasHeight / 2 + shadowSize / 4)
-        )
-
-        //
-        drawSpecifiedLine(
-            color = Color.DarkGray,
-            start = Offset(canvasWidth / 2 - shadowDistance - shadowSize / 12, canvasHeight / 2 + shadowSize / 3),
-            end = Offset(canvasWidth / 2 - shadowDistance - shadowSize / 4, canvasHeight / 2 + shadowSize / 4)
+            start = Offset(pointX - shadowDistance - shadowSize / 12, pointY + shadowSize / 3),
+            end = Offset(pointX - shadowDistance - shadowSize / 12, pointY + shadowSize)
         )
 
         drawSpecifiedLine(
             color = Color.DarkGray,
-            start = Offset(canvasWidth / 2 - shadowDistance + shadowSize / 12, canvasHeight / 2 + shadowSize / 3),
-            end = Offset(canvasWidth / 2 - shadowDistance + shadowSize / 4, canvasHeight / 2 + shadowSize / 4)
-        )
-
-        //
-        drawSpecifiedLine(
-            color = Color.DarkGray,
-            start = Offset(canvasWidth / 2 - shadowDistance - shadowSize / 12, canvasHeight / 2 + shadowSize),
-            end = Offset(canvasWidth / 2 - shadowDistance - shadowSize / 4, canvasHeight / 2 - shadowSize / 24 + shadowSize)
+            start = Offset(pointX - shadowDistance + shadowSize / 12, pointY + shadowSize / 3),
+            end = Offset(pointX - shadowDistance + shadowSize / 12, pointY + shadowSize)
         )
 
         drawSpecifiedLine(
             color = Color.DarkGray,
-            start = Offset(canvasWidth / 2 - shadowDistance + shadowSize / 12, canvasHeight / 2 + shadowSize),
-            end = Offset(canvasWidth / 2 - shadowDistance + shadowSize / 4, canvasHeight / 2 - shadowSize / 24 + shadowSize)
-        )
-
-        //
-        drawSpecifiedLine(
-            color = Color.DarkGray,
-            start = Offset(canvasWidth / 2 - shadowDistance - shadowSize / 12, canvasHeight / 2 + shadowSize / 3),
-            end = Offset(canvasWidth / 2 - shadowDistance + shadowSize / 12, canvasHeight / 2 + shadowSize / 3)
+            start = Offset(pointX - shadowDistance, pointY),
+            end = Offset(pointX - shadowDistance - shadowSize / 4, pointY + shadowSize / 4)
         )
 
         drawSpecifiedLine(
             color = Color.DarkGray,
-            start = Offset(canvasWidth / 2 - shadowDistance - shadowSize / 12, canvasHeight / 2 + shadowSize),
-            end = Offset(canvasWidth / 2 - shadowDistance + shadowSize / 12, canvasHeight / 2 + shadowSize)
+            start = Offset(pointX - shadowDistance, pointY),
+            end = Offset(pointX - shadowDistance + shadowSize / 4, pointY + shadowSize / 4)
+        )
+
+        drawSpecifiedLine(
+            color = Color.DarkGray,
+            start = Offset(pointX - shadowDistance - shadowSize / 12, pointY + shadowSize / 3),
+            end = Offset(pointX - shadowDistance - shadowSize / 4, pointY + shadowSize / 4)
+        )
+
+        drawSpecifiedLine(
+            color = Color.DarkGray,
+            start = Offset(pointX - shadowDistance + shadowSize / 12, pointY + shadowSize / 3),
+            end = Offset(pointX - shadowDistance + shadowSize / 4, pointY + shadowSize / 4)
+        )
+
+        drawSpecifiedLine(
+            color = Color.DarkGray,
+            start = Offset(pointX - shadowDistance - shadowSize / 12, pointY + shadowSize),
+            end = Offset(pointX - shadowDistance - shadowSize / 4, pointY - shadowSize / 24 + shadowSize)
+        )
+
+        drawSpecifiedLine(
+            color = Color.DarkGray,
+            start = Offset(pointX - shadowDistance + shadowSize / 12, pointY + shadowSize),
+            end = Offset(pointX - shadowDistance + shadowSize / 4, pointY - shadowSize / 24 + shadowSize)
+        )
+
+        drawSpecifiedLine(
+            color = Color.DarkGray,
+            start = Offset(pointX - shadowDistance - shadowSize / 12, pointY + shadowSize / 3),
+            end = Offset(pointX - shadowDistance + shadowSize / 12, pointY + shadowSize / 3)
+        )
+
+        drawSpecifiedLine(
+            color = Color.DarkGray,
+            start = Offset(pointX - shadowDistance - shadowSize / 12, pointY + shadowSize),
+            end = Offset(pointX - shadowDistance + shadowSize / 12, pointY + shadowSize)
         )
 
         // Light Come
+        // Cahaya Lurus
         drawSpecifiedLine(
             color = Color.Red,
-            start = Offset(canvasWidth / 2, canvasHeight / 2 - objectSize),
-            end = Offset(canvasWidth / 2 - objectDistance, canvasHeight / 2 - objectSize)
+            start = Offset(pointX, pointY - objectSize),
+            end = Offset(pointX - objectDistance, pointY - objectSize)
         )
 
         drawSpecifiedLine(
             color = Color.Red,
-            start = Offset(canvasWidth / 2, canvasHeight / 2 + shadowSize),
-            end = Offset(canvasWidth / 2 - objectDistance, canvasHeight / 2 - objectSize)
+            start = Offset(pointX, pointY - objectSize),
+            end = dda(pointX, pointY - objectSize, pointX - objectDistance, pointY - objectSize) { it, s ->
+                Rect(Offset.Zero, size).contains(it) || s
+            }
         )
+
+        // Cahaya Miring
+        drawSpecifiedLine(
+            color = Color.Red,
+            start = Offset(pointX, pointY + shadowSize),
+            end = Offset(pointX - objectDistance, pointY - objectSize)
+        )
+
+        drawSpecifiedLine(
+            color = Color.Red,
+            start = Offset(pointX, pointY + shadowSize),
+            end = dda(pointX, pointY + shadowSize, pointX - objectDistance, pointY - objectSize) { it, s ->
+                Rect(Offset.Zero, size).contains(it) || s
+            }
+        )
+
 
         // Light Past
+        // Cahaya Lurus
         drawSpecifiedLine(
             color = Color.Magenta,
-            start = Offset(canvasWidth / 2, canvasHeight / 2 + shadowSize),
-            end = Offset(canvasWidth / 2 - shadowDistance, canvasHeight / 2 + shadowSize)
+            start = Offset(pointX, pointY + shadowSize),
+            end = Offset(pointX - shadowDistance, pointY + shadowSize)
         )
 
         drawSpecifiedLine(
             color = Color.Magenta,
-            start = Offset(canvasWidth / 2, canvasHeight / 2 - objectSize),
-            end = Offset(canvasWidth / 2 - shadowDistance, canvasHeight / 2 + shadowSize)
+            start = Offset(pointX, pointY + shadowSize),
+            end = dda(pointX, pointY + shadowSize, pointX - shadowDistance, pointY + shadowSize) { it, s ->
+                Rect(Offset.Zero, size).contains(it) || s
+            }
+        )
+
+        // Cahaya Miring
+        drawSpecifiedLine(
+            color = Color.Magenta,
+            start = Offset(pointX, pointY - objectSize),
+            end = Offset(pointX - shadowDistance, pointY + shadowSize)
+        )
+
+        drawSpecifiedLine(
+            color = Color.Magenta,
+            start = Offset(pointX, pointY - objectSize),
+            end = dda(pointX, pointY - objectSize, pointX - shadowDistance, pointY + shadowSize) { it, s ->
+                Rect(Offset.Zero, size).contains(it) || s
+            }
         )
 
         // Text F and R
@@ -248,15 +289,15 @@ fun ConcaveMirrorCanvas(
         drawIntoCanvas {
             it.nativeCanvas.drawText(
                 "r",
-                canvasWidth / 2 - focalPoint * 2,
-                canvasHeight / 2,
+                pointX - focalPoint * 2,
+                pointY,
                 textPaint
             )
 
             it.nativeCanvas.drawText(
                 "f",
-                canvasWidth / 2 - focalPoint,
-                canvasHeight / 2,
+                pointX - focalPoint,
+                pointY,
                 textPaint
             )
         }
@@ -264,17 +305,41 @@ fun ConcaveMirrorCanvas(
         // Horizontal Line
         drawSpecifiedLine(
             color = Color.Gray,
-            start = Offset(0f, canvasHeight / 2),
-            end = Offset(canvasWidth, canvasHeight / 2),
+            start = Offset(0f, pointY),
+            end = Offset(canvasWidth, pointY),
         )
 
         // Vertical Line
         drawSpecifiedLine(
             color = Color.Gray,
-            start = Offset(canvasWidth / 2, 0f),
-            end = Offset(canvasWidth / 2, canvasHeight),
+            start = Offset(pointX, 0f),
+            end = Offset(pointX, canvasHeight),
         )
     }
+}
+
+fun dda(x0: Float, y0: Float, x1: Float, y1: Float, whileNot: (Offset, Boolean) -> Boolean): Offset {
+    // Calculate dx & dy
+    val dx = x1 - x0
+    val dy = y1 - y0
+
+    // Calculate steps required for generating pixels
+    val steps = max(abs(dx), abs(dy))
+
+    // calculate increment in x & y for each steps
+    val incX = dx / steps
+    val incY = dy / steps
+
+    var x = x0
+    var y = y0
+
+    if (x1 <= x0 && y1 <= y0) {
+        while(whileNot(Offset(x,y), 0f < x && 0f < y )) {
+            x += incX
+            y += incY
+        }
+    }
+    return Offset(x,y)
 }
 
 fun DrawScope.drawSpecifiedLine(color: Color, start: Offset, end: Offset) {
@@ -282,4 +347,3 @@ fun DrawScope.drawSpecifiedLine(color: Color, start: Offset, end: Offset) {
         drawLine(color = color, start = start, end = end, strokeWidth = Stroke.DefaultMiter)
     }
 }
-
