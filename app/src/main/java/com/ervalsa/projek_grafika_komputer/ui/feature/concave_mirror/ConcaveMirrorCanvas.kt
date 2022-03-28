@@ -1,14 +1,15 @@
 package com.ervalsa.projek_grafika_komputer.ui.feature.concave_mirror
 
 import android.graphics.Paint
-import android.graphics.Point
 import androidx.compose.foundation.Canvas
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.isSpecified
+import androidx.compose.ui.geometry.isUnspecified
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
@@ -228,9 +229,8 @@ fun ConcaveMirrorCanvas(
         drawSpecifiedLine(
             color = Color.Red,
             start = Offset(pointX, pointY - objectSize),
-            end = dda(pointX, pointY - objectSize, pointX - objectDistance, pointY - objectSize) { it, s ->
-                Rect(Offset.Zero, size).contains(it) || s
-            }
+            end = dda(pointX, pointY - objectSize, pointX - objectDistance, pointY - objectSize
+            )
         )
 
         // Cahaya Miring
@@ -243,9 +243,10 @@ fun ConcaveMirrorCanvas(
         drawSpecifiedLine(
             color = Color.Red,
             start = Offset(pointX, pointY + shadowSize),
-            end = dda(pointX, pointY + shadowSize, pointX - objectDistance, pointY - objectSize) { it, s ->
-                Rect(Offset.Zero, size).contains(it) || s
-            }
+            end = dda(
+                pointX, pointY + shadowSize,
+                pointX - objectDistance, pointY - objectSize
+            )
         )
 
 
@@ -260,9 +261,10 @@ fun ConcaveMirrorCanvas(
         drawSpecifiedLine(
             color = Color.Magenta,
             start = Offset(pointX, pointY + shadowSize),
-            end = dda(pointX, pointY + shadowSize, pointX - shadowDistance, pointY + shadowSize) { it, s ->
-                Rect(Offset.Zero, size).contains(it) || s
-            }
+            end = dda(
+                pointX, pointY + shadowSize,
+                pointX - shadowDistance, pointY + shadowSize
+            )
         )
 
         // Cahaya Miring
@@ -275,9 +277,10 @@ fun ConcaveMirrorCanvas(
         drawSpecifiedLine(
             color = Color.Magenta,
             start = Offset(pointX, pointY - objectSize),
-            end = dda(pointX, pointY - objectSize, pointX - shadowDistance, pointY + shadowSize) { it, s ->
-                Rect(Offset.Zero, size).contains(it) || s
-            }
+            end = dda(
+                pointX, pointY - objectSize,
+                pointX - shadowDistance, pointY + shadowSize
+            )
         )
 
         // Text F and R
@@ -318,7 +321,7 @@ fun ConcaveMirrorCanvas(
     }
 }
 
-fun dda(x0: Float, y0: Float, x1: Float, y1: Float, whileNot: (Offset, Boolean) -> Boolean): Offset {
+fun DrawScope.dda(x0: Float, y0: Float, x1: Float, y1: Float): Offset {
     // Calculate dx & dy
     val dx = x1 - x0
     val dy = y1 - y0
@@ -330,16 +333,24 @@ fun dda(x0: Float, y0: Float, x1: Float, y1: Float, whileNot: (Offset, Boolean) 
     val incX = dx / steps
     val incY = dy / steps
 
+    if (Offset(incX, incY).isUnspecified) {
+        return Offset(incX, incY)
+    }
+
     var x = x0
     var y = y0
 
-    if (x1 <= x0 && y1 <= y0) {
-        while(whileNot(Offset(x,y), 0f < x && 0f < y )) {
-            x += incX
-            y += incY
-        }
+    var index = 0
+    var offset = Offset(x, y)
+    val rect = Rect(Offset.Zero, size)
+    while (index < steps.toInt() || rect.contains(offset)) {
+        x += incX
+        y += incY
+
+        offset = Offset(x, y)
+        index += 1
     }
-    return Offset(x,y)
+    return offset
 }
 
 fun DrawScope.drawSpecifiedLine(color: Color, start: Offset, end: Offset) {
