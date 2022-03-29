@@ -6,6 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
+import androidx.navigation.compose.rememberNavController
+import com.ervalsa.projek_grafika_komputer.navigation.SetupNavGraph
 import com.ervalsa.projek_grafika_komputer.ui.feature.concave_mirror.ConcaveMirrorScreen
 import com.ervalsa.projek_grafika_komputer.ui.theme.ProjekgrafikakomputerTheme
 
@@ -15,10 +17,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ProjekgrafikakomputerTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    ConcaveMirrorScreen(/*concaveMirrorViewModel = ConcaveMirrorViewModel()*/)
-                }
+                val navController = rememberNavController()
+                SetupNavGraph(navController = navController)
             }
         }
     }
