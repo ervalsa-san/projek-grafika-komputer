@@ -1,5 +1,8 @@
 package com.ervalsa.projek_grafika_komputer.ui.feature.concave_mirror
 
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.rememberScrollableState
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -13,9 +16,7 @@ import kotlin.math.abs
 
 @ExperimentalMaterialApi
 @Composable
-fun ConcaveMirrorScreen(
-    /*concaveMirrorViewModel: ConcaveMirrorViewModel*/
-) {
+fun ConcaveMirrorScreen() {
     // Text State
     var objectSizeTextState by rememberSaveable{ (mutableStateOf(148f.toString())) }
     var objectDistanceTextState by rememberSaveable { (mutableStateOf(303f.toString())) }
@@ -110,7 +111,8 @@ fun ConcaveMirrorScreen(
                 Text(text = "Ukuran Benda")
                 Row() {
                     Slider(
-                        modifier = Modifier.weight(2f),
+                        modifier = Modifier
+                            .weight(2f),
                         value = objectSizeFloat,
                         valueRange = rangeY,
                         onValueChange = { objectSizeTextState = it.toString() }
@@ -119,7 +121,8 @@ fun ConcaveMirrorScreen(
                     TextField(
                         modifier = Modifier.weight(1f),
                         value = objectSizeTextState,
-                        onValueChange = { objectSizeTextState = it }
+                        onValueChange = { objectSizeTextState = it },
+                        singleLine = true
                     )
                 }
             }
@@ -142,7 +145,8 @@ fun ConcaveMirrorScreen(
                     TextField(
                         modifier = Modifier.weight(1f),
                         value = objectDistanceTextState,
-                        onValueChange = { objectDistanceTextState = it }
+                        onValueChange = { objectDistanceTextState = it },
+                        singleLine = true
                     )
                 }
             }
@@ -165,7 +169,8 @@ fun ConcaveMirrorScreen(
                     TextField(
                         modifier = Modifier.weight(1f),
                         value = mirrorFocalPointTextState,
-                        onValueChange = { mirrorFocalPointTextState = it }
+                        onValueChange = { mirrorFocalPointTextState = it },
+                        singleLine = true
                     )
                 }
             }
